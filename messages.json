@@ -1,0 +1,43 @@
+{
+    "notification": [
+        {
+            "message": "## ⚠️ Notificação!\n**Olá!!!**\nGostaria de lembrar **VOCÊ** - *a mulher mais linda do mundo* - de tomar seus remédio. Essa ação é muito importante para que sua cabeça e seu corpo continuem funcionando perfeitamente.\n\nCaso já tenha tomado reaja a esta mensagem com :white_check_mark:.\nSe você ainda não conseguiu tomar, por favor reaja com :x:.",
+            "reaction": ["✅", "❌"],
+            "gifURL": "https://tenor.com/view/parcours-the-office-gif-1697835577625464052"
+        }
+    ],
+    "congratulations": [
+        {
+            "message": "## Parabéns :partying_face: \nVocê é incrível e está de parabéns por tomar seu remedinho. \nTenho muito orgulho da minha princesa <3",
+            "gifURL": "https://tenor.com/view/party-party-time-the-office-michael-scott-steve-carell-gif-21125170"
+        }
+    ],
+    "forgot": [
+        {
+            "message": "## Ué 🤨 \nNão tem problema. Como eu sou um bot legal, vou lembra você daqui a 10 minutos. :)",
+            "gifURL": "https://tenor.com/bppXh.gif"
+        }
+    ],
+    "forgotPart2": [
+        {
+            "message": "## Melhor ☝️😁 \nSe não puder tomar agora, posso te lembrar mais tarde.\nÉ só escolher em quanto tempo quer ser lembrada usando os botões abaixo."
+        }
+    ],
+    "lostStreak": [
+        {
+            "message": "## Não consigo acreditar que você perdeu sua streak. \nSem problemas, vamos começar do zero.",
+            "gifURL": "https://tenor.com/view/sh1t-gif-8675927218887215532"
+        }
+    ],
+    "timeout": [
+        {
+            "message": "Ei moçinha você ainda não me respondeu!!",
+            "gifURL": "https://tenor.com/view/sh1t-gif-8675927218887215532"
+        }
+    ],
+    "waitingMenu": [
+        {
+            "message": "##\nSeguinte, vi que você ainda não tomou seu remédio. 😔\nSe não puder tomar agora, posso te lembrar mais tarde.\nÉ só escolher em quanto tempo quer ser lembrada usando os botões abaixo."
+        }
+    ]
+}

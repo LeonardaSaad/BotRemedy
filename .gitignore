@@ -1,0 +1,11 @@
+# Variáveis de ambiente
+.env
+
+# Arquivos de configuração sensíveis
+config.json
+
+# Dependências do Node
+node_modules/
+
+# Configurações locais do VS Code
+.vscode/
