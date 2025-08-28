@@ -4,9 +4,9 @@ const {
     ButtonStyle,
     ComponentType,
 } = require("discord.js");
-const { getUser } = require("./getUser");
-const { logError } = require("./logMessages");
-const { user_id } = require("./config.json");
+const { getUser } = require("../services/getUser");
+const { logError } = require("../logMessages");
+const { user_id } = require("../config.json");
 
 async function sendMessageButton(client, message) {
     const user = await getUser(client, user_id);

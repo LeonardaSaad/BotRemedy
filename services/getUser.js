@@ -1,5 +1,5 @@
 const { DateTimeManager } = require("./DateTimeManager");
-const { logError } = require("./logMessages");
+const { logError } = require("../logMessages");
 
 const dtManager = new DateTimeManager();
 

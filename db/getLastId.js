@@ -1,4 +1,4 @@
-const { logError } = require("./logMessages");
+const { logError } = require("../logMessages");
 const { selectApi } = require("./selectApi");
 
 async function getLastId() {

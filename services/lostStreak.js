@@ -1,6 +1,6 @@
-const { createStreak } = require("./createStreak");
-const { getLastId } = require("./getLastId");
-const { updateApi } = require("./updateApi");
+const { createStreak } = require("../db/createStreak");
+const { getLastId } = require("../db/getLastId");
+const { updateApi } = require("../db/updateApi");
 
 async function lostStreak() {
     // Create new streak

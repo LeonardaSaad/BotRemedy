@@ -1,6 +1,6 @@
-const { logWarning } = require("./logMessages");
-const { lostStreak } = require("./lostStreak");
-const { selectApi } = require("./selectApi");
+const { logWarning } = require("../logMessages");
+const { lostStreak } = require("../services/lostStreak");
+const { selectApi } = require("../db/selectApi");
 
 /**
  * Check if the streak has been updated today or need wait next day.

@@ -3,16 +3,17 @@ const { Client, Events, GatewayIntentBits } = require("discord.js");
 const { token, user_id } = require("./config.json");
 const Messages = require("./messages.json");
 
-const { getUser } = require("./getUser");
-const { DateTimeManager } = require("./DateTimeManager");
-const { getActualStreakId } = require("./getActualStreakId");
-const { getStreakBeenUpdatedToday } = require("./getStreakBeenUpdatedToday");
-const { selectApi } = require("./selectApi");
-const { getLastId } = require("./getLastId");
-const { updateApi } = require("./updateApi");
-const { sendMessage } = require("./sendMessage");
-const { logInfo, logError, logWarning } = require("./logMessages");
-const { sendMessageButton } = require("./sendMessageButton");
+const { getUser } = require("./services/getUser");
+const { DateTimeManager } = require("./services/DateTimeManager");
+const { getActualStreakId } = require("./db/getActualStreakId");
+const { getStreakBeenUpdatedToday } = require("./services/getStreakBeenUpdatedToday");
+const { selectApi } = require("./db/selectApi");
+const { getLastId } = require("./db/getLastId");
+const { updateApi } = require("./db/updateApi");
+const { sendMessage } = require("./services/sendMessage");
+const { logInfo, logError, logWarning, logSuccess } = require("./logMessages");
+const { sendMessageButton } = require("./services/sendMessageButton");
+const { isTimeForMedicine } = require("./services/isTimeForMedicine");
 
 const client = new Client({
     intents: [
@@ -26,9 +27,7 @@ const client = new Client({
 
 const dtManager = new DateTimeManager();
 
-function sleep(ms) {
-    return new Promise((resolve) => setTimeout(resolve, ms));
-}
+
 
 async function startBotMonitoringLoop() {
     logInfo("Start bot monitoring loop.");
@@ -63,22 +62,50 @@ async function startBotMonitoringLoop() {
         );
 
         if (streakStatus == "streak_lost") {
+            //SECTION - Now is more then 16h
+            //* Lost Streak
+            logWarning(`It's past time to take the medicine.`);
+
+            const daysCountResult = await selectApi(
+                "streaks",
+                "days_count",
+                "streak_id",
+                actualStreaksId
+            );
+            const daysCount = daysCountResult[0].days_count;
+            await sendMessage(client, Messages.lostStreak, null, true, 100);
+            await sendMessage(
+                client,
+                `Uma pena, mas sua streak era: ${daysCount}.`,
+                null,
+                null,
+                100
+            );
+            await dtManager.awaitUntilNextDay();
             continue;
         } else if (streakStatus == "waited_for_next_day") {
-
+            logSuccess(`Today was computed!`)
             await dtManager.awaitUntilNextDay();
             continue;
         } else if (streakStatus === "today_is_not_computed") {
+            //SECTION - Check if it is time to take medicine
+            // Call function
+            const timeForMedicine = await isTimeForMedicine();
+
+            
+
+
+
             continue;
         }
 
         if (
-            dtManager.getTime() >= "10:00:00" 
-            // dtManager.getTime() <= "19:00:00"
+            dtManager.getTime() >= "10:00:00" &&
+            dtManager.getTime() <= "16:00:00"
         ) {
             const emojis = ["✅", "❌"];
 
-            const notificationTimeout = 60000*15;
+            const notificationTimeout = 60000 * 15;
 
             const notification = await sendMessage(
                 client,
@@ -265,21 +292,14 @@ async function startBotMonitoringLoop() {
 
                 continue;
             }
+        } else if (dtManager.getTime() < "10:00:00") {
+            //SECTION - Lost streak
+            logInfo(`Waiting for the right hour.`);
+            const waitTime = 60000 * 10;
+            await sleep(waitTime);
+
+            continue;
         } else {
-            //* Lost streak
-            const daysCountResult = await selectApi(
-                "streaks",
-                "days_count",
-                "streak_id",
-                actualStreaksId
-            );
-            const daysCount = daysCountResult[0].days_count;
-            await sendMessage(client, Messages.lostStreak, null, true, 100);
-            await sendMessage(
-                client,
-                `Uma pena, mas sua streak era **${daysCount}**.`
-            );
-            await dtManager.awaitUntilNextDay();
             continue;
         }
     }
@@ -293,6 +313,8 @@ client.once(Events.ClientReady, async (readyClient) => {
     if (!user) {
         console.log(`[${dtManager.getTime()}]`, "error to get the user");
     }
+
+    logInfo(`User founded: ${user.username}`);
 
     startBotMonitoringLoop();
 });

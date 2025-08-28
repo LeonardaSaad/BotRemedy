@@ -1,7 +1,7 @@
-const { DateTimeManager } = require("./DateTimeManager");
-const { getUser } = require("./getUser");
-const { user_id } = require("./config.json");
-const { logError, logInfo } = require("./logMessages");
+const { DateTimeManager } = require("../services/DateTimeManager");
+const { getUser } = require("../services/getUser");
+const { user_id } = require("../config.json");
+const { logError, logInfo } = require("../logMessages");
 
 const dtManager = new DateTimeManager();
 
@@ -51,6 +51,7 @@ async function sendMessage(client, msgContent, emojis, gifFirst, timeout) {
         }
 
         const message = await user.send(messageText);
+        logInfo(`${msgContent} was sent.`)
 
         // React with emojis
         if (emojis && Array.isArray(emojis)) {

@@ -1,5 +1,5 @@
-const { logError } = require("./logMessages");
-const { DateTimeManager } = require("./DateTimeManager");
+const { logError } = require("../logMessages");
+const { DateTimeManager } = require("../services/DateTimeManager");
 const { selectApi } = require("./selectApi");
 
 

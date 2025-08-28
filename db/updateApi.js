@@ -1,6 +1,6 @@
-const { fetchApi } = require("./fetchApi");
-const { DateTimeManager } = require("./DateTimeManager");
-const { logError, logInfo } = require("./logMessages");
+const { fetchApi } = require("../db/fetchApi");
+const { DateTimeManager } = require("../services/DateTimeManager");
+const { logError, logInfo } = require("../logMessages");
 
 
 

@@ -4,7 +4,7 @@ const { createClient } = require("@supabase/supabase-js");
 const supabaseUrl = "https://hkdgkaqdwfgcxgjyvnjo.supabase.co";
 const supabaseKey = process.env.SUPABASE_KEY;
 
-const { DateTimeManager } = require("./DateTimeManager");
+const { DateTimeManager } = require("../services/DateTimeManager");
 const dtManager = new DateTimeManager();
 
 async function fetchApi() {

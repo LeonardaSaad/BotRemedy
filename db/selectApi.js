@@ -1,6 +1,6 @@
 // require("dotenv").config();
 
-const { DateTimeManager } = require("./DateTimeManager");
+const { DateTimeManager } = require("../services/DateTimeManager");
 const { fetchApi } = require("./fetchApi");
 
 const dtManager = new DateTimeManager();

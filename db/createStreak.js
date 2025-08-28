@@ -1,5 +1,5 @@
 const { fetchApi } = require("./fetchApi");
-const { DateTimeManager } = require("./DateTimeManager");
+const { DateTimeManager } = require("../services/DateTimeManager");
 const { getLastId } = require("./getLastId");
 
 const dtManager = new DateTimeManager();
