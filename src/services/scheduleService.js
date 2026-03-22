@@ -3,12 +3,19 @@ const { sendMedicineReminder } = require("./notifyService.js");
 const { lastStreak } = require("../db/lastStreak.js");
 const { lostStreak } = require("../db/lostStreak.js");
 
+let isRunning = false;
+
 async function startScheduler(client, userId, cronExpression) {
     console.log("[Scheduler] Iniciado com expressão:", cronExpression);
 
     cron.schedule(
         cronExpression,
         async () => {
+            if (isRunning) {
+                // NOTE -  Já existe um ciclo ativo, pulando
+                return;
+            }
+
             const now = new Date();
             const ltStreak = await lastStreak();
             
@@ -36,7 +43,9 @@ async function startScheduler(client, userId, cronExpression) {
             }
 
             if (!takedToday) {
+                isRunning = true;
                 await sendMedicineReminder(client, userId);
+                isRunning = false;
             }
         },
         {
